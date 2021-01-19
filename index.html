@@ -14,11 +14,18 @@
         crossorigin=""></script>
     <style type="text/css">
         .mapid {
-            height: 450px;
+            height: 400px;
             border: 2px solid;
         }
     </style>
     <script>
+
+        async function cidade(id) {
+            const local = await fetch('http://llcb.opendatabr.org/api/' + id);
+            const localJson = await local.json();
+            la = 51.505;
+            lo = -0.09;
+        };
 
         async function getCidade() {
             const dados = await fetch('https://servicodados.ibge.gov.br/api/v1/localidades/microrregioes/22005/distritos');
@@ -27,25 +34,40 @@
             dadosJson.forEach(element => {
                 const option = document.createElement('option');
                 option.value = element.id;
+                option.setAttribute('onClick', cidade(element.id));
                 option.innerHTML = element.nome;
                 select.appendChild(option);
             });
         }
+        function lL() {
+            return [51.505, -0.09];
+        }
+        function ponteiro(params) {
+            return [51.5, -0.09];
+        }
+        setInterval(() => {
+            if (mymap) {
+                const select = document.getElementById('cities');
+                if (select) {
+                    const value = select.options[select.selectedIndex].value;
+                    cidade(value);
+                }
+                clearInterval()
+            }
+        }, 1000);
 
         getCidade();
-
     </script>
 </head>
 
 <body>
-
     <div class="container col-md-9">
-        <!-- Image and text -->
         <nav class="navbar navbar-light bg-light">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">
                     <select class="form-control" name="cities" id="cities"></select>
                 </a>
+                Transparência
             </div>
         </nav>
         <div class="row">
@@ -54,7 +76,7 @@
     </div>
 </body>
 <script>
-    var mymap = L.map('mapid').setView([51.505, -0.09], 13);
+    var mymap = L.map('mapid').setView(lL(), 13);
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
         maxZoom: 18,
@@ -63,7 +85,7 @@
         zoomOffset: -1,
         accessToken: 'pk.eyJ1Ijoicm9tYXJpb3NvYXJlcyIsImEiOiJja2sydGMxYjIwZTNiMnBudW83MmpsZnp5In0.OgY6SxTiUBOLyJlisOB6Cw'
     }).addTo(mymap);
-    var marker = L.marker([51.5, -0.09]).addTo(mymap);
+    var marker = L.marker(ponteiro()).addTo(mymap);
     var circle = L.circle([51.508, -0.11], {
         color: 'red',
         fillColor: '#f03',

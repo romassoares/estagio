@@ -1,1 +1,60 @@
-ola
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title> Mapa </title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin="" />
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin=""></script>
+    <style type="text/css">
+        .mapid {
+            height: 450px;
+            border: 2px solid;
+        }
+    </style>
+    <script>
+        /* Obtém o conjunto de distritos do Brasil a partir dos identificadores das microrregiões */
+
+        const request = new Request('https://servicodados.ibge.gov.br/api/v1/localidades/microrregioes/22005/distritos', { method: 'GET' });
+
+        fetch(request)
+            .then(response => {
+                console.log(response.json())
+            })
+            .catch(error => console.log(error));
+
+    </script>
+</head>
+
+<body>
+    <div id="mapid" class="mapid"></div>
+</body>
+<script>
+    var mymap = L.map('mapid').setView([51.505, -0.09], 13);
+    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        id: 'mapbox/streets-v11',
+        tileSize: 512,
+        zoomOffset: -1,
+        accessToken: 'pk.eyJ1Ijoicm9tYXJpb3NvYXJlcyIsImEiOiJja2sydGMxYjIwZTNiMnBudW83MmpsZnp5In0.OgY6SxTiUBOLyJlisOB6Cw'
+    }).addTo(mymap);
+    var marker = L.marker([51.5, -0.09]).addTo(mymap);
+    var circle = L.circle([51.508, -0.11], {
+        color: 'red',
+        fillColor: '#f03',
+        fillOpacity: 0.5,
+        radius: 500
+    }).addTo(mymap);
+
+
+    marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
+    circle.bindPopup("I am a circle.");
+    polygon.bindPopup("I am a polygon.");
+</script>
+
+</html>

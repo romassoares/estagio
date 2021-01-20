@@ -27,12 +27,19 @@
             lo = -0.09;
         };
 
-        async function getDespesas(id){
-            const despesas = await fetch(`http://sistemas.tce.pi.gov.br/api/portaldacidadania/despesas/${id}`);
-            if(despesas.status.ok)
-                return await despesas.json();
+        async function getPrefeituras(){
+
+            const prefeituras = await fetch(`http://sistemas.tce.pi.gov.br/api/portaldacidadania/prefeituras`);
+
+            console.log(await prefeituras.json());
             
-            return "Não encontrado";
+        }
+
+        async function getDespesas(id){
+
+            const despesas = await fetch(`http://sistemas.tce.pi.gov.br/api/portaldacidadania/despesas/${id}`);
+
+             console.log(await despesas.json());
         }
 
         async function getCidade() {
@@ -64,8 +71,8 @@
         //     }
         // }, 1000);
 
-        getCidade();
-        getDespesas(2205250);
+        getPrefeituras();
+        getDespesas(1482);
     </script>
 
 

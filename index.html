@@ -80,43 +80,48 @@
 </head>
 
 <body>
-    <div class="container col-md-12">
-        <nav class="navbar navbar-light bg-light">
-            <div class="container-fluid">
-                Transparência
-            </div>
-        </nav>
+    <div class="text-center m-0">
+        <h1 class="text-center p-2" style="background-color: rgba(0, 0, 0, 0.2)">Médio Parnaíba Transparente</h1>
+    </div>
+    <div class="container">
         <div class="row">
             <div id="mapid" class="mapid"></div>
         </div>
         <div class="row">
-            <div>
+            <div class="container-md">
                 <br />
                 <p>Esta página foi criada com o intuito de disponibilizar informações relevantes para a sociedade,
                     sendo
                     de fácil compreensão e acesso para a sociedade interessada.</p>
             </div>
-            <div>
+            <div class="row">
                 <h3>Alguns dos sites utilizados:</h3>
-                <ol>
-                    <li>http://sistemas.tce.pi.gov.br/api/portaldacidadania/prefeituras</li>
-                    <li>http://sistemas.tce.pi.gov.br/api/portaldacidadania/despesas/</li>
-                    <li> https://servicodados.ibge.gov.br/api/v1/localidades/microrregioes/22005/distritos</li>
-                </ol>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">http://sistemas.tce.pi.gov.br/api/portaldacidadania/prefeituras</li>
+                    <li class="list-group-item">http://sistemas.tce.pi.gov.br/api/portaldacidadania/despesas/</li>
+                    <li class="list-group-item">
+                        https://servicodados.ibge.gov.br/api/v1/localidades/microrregioes/22005/distritos</li>
+                </ul>
             </div>
-            <div>
+            <div class="row pt-4">
                 <h3> Como fazer: </h3>
-                <ol>
-                    <li>criar um arquivo HTML;</li>
-                    <li>carregar um modelo de mapa:</li>
-                    <dt style="color: #a1a1a1;">https://leafletjs.com/reference-1.7.1.html#map-option</dt sty>
-                    <li>escolher região para ser carregada inicialmente;</li>
-                    <li>marcar pontos ou delimitar regiões com coordenadas geográficas;</li>
-                    <li>criar funções com uma linguagem de programação para “pegar” as informações das API’s;</li>
-                    <li>carregar as informações das funções no mapa.</li>
-                </ol>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">criar um arquivo HTML;</li>
+                    <li class="list-group-item">carregar um modelo de mapa:
+                        https://leafletjs.com/reference-1.7.1.html#map-option
+                    </li>
+                    <li class="list-group-item">escolher região para ser carregada inicialmente;</li>
+                    <li class="list-group-item">marcar pontos ou delimitar regiões com coordenadas geográficas;</li>
+                    <li class="list-group-item">criar funções com uma linguagem de programação para “pegar” as
+                        informações das API’s;</li>
+                    <li class="list-group-item">carregar as informações das funções no mapa.</li>
+                </ul>
             </div>
         </div>
+    </div>
+    <div class="text-center p-2" style="background-color: rgba(0, 0, 0, 0.2)">
+        © 2020 Copyright:
+        <a class="text-dark" href="#">Sociedade</a>
     </div>
 </body>
 <script>

@@ -18,6 +18,7 @@
             border: 2px solid;
         }
     </style>
+    <script type="text/javascript" src="municipios.js"></script>
     <script>
 
         async function cidade(id) {
@@ -27,33 +28,18 @@
             lo = -0.09;
         };
 
-        async function getPrefeituras() {
-
-            const prefeituras = await fetch(`http://sistemas.tce.pi.gov.br/api/portaldacidadania/prefeituras`);
-
-            console.log(await prefeituras.json());
-
-        }
-
-        async function getDespesas(id) {
-
-            const despesas = await fetch(`http://sistemas.tce.pi.gov.br/api/portaldacidadania/despesas/${id}`);
-
-            console.log(await despesas.json());
-        }
-
-        async function getCidade() {
-            const dados = await fetch('https://servicodados.ibge.gov.br/api/v1/localidades/microrregioes/22005/distritos');
-            const dadosJson = await dados.json();
-            const select = document.getElementById('cities');
-            dadosJson.forEach(element => {
-                const option = document.createElement('option');
-                option.value = element.id;
-                option.setAttribute('onClick', cidade(element.id));
-                option.innerHTML = element.nome;
-                select.appendChild(option);
-            });
-        }
+        // async function getCidade() {
+        //     const dados = await fetch('https://servicodados.ibge.gov.br/api/v1/localidades/microrregioes/22005/distritos');
+        //     const dadosJson = await dados.json();
+        //     const select = document.getElementById('cities');
+        //     dadosJson.forEach(element => {
+        //         const option = document.createElement('option');
+        //         option.value = element.id;
+        //         option.setAttribute('onClick', cidade(element.id));
+        //         option.innerHTML = element.nome;
+        //         select.appendChild(option);
+        //     });
+        // }
         function latiLong() {
             return [51.505, -0.09];
         }
@@ -71,8 +57,8 @@
         //     }
         // }, 1000);
 
-        getPrefeituras();
-        getDespesas(1482);
+        // getPrefeitura();
+
     </script>
 
 
@@ -135,27 +121,43 @@
         zoomOffset: -1,
         accessToken: 'pk.eyJ1Ijoicm9tYXJpb3NvYXJlcyIsImEiOiJja2sydGMxYjIwZTNiMnBudW83MmpsZnp5In0.OgY6SxTiUBOLyJlisOB6Cw'
     }).addTo(mymap);
+    
 
-    // var geojsonMarkerOptions = {
-    //     radius: 8,
-    //     fillColor: "#ff7800",
-    //     color: "#000",
-    //     weight: 1,
-    //     opacity: 1,
-    //     fillOpacity: 0.8
-    // };
+    async function getDespesas() {
 
-    function onEachFeature(feature, layer) {
-        // does this feature have a property named popupContent?
-        layer.bindPopup(
-            `<b>${feature.properties.name}</b>
-                <br/>DESPESAS: 19873535352`
-        );
-    }
+        async function getDespesaMunicipio(id_ibge){
 
-    L.geoJSON(fronteiras, {
-        onEachFeature: onEachFeature,
-    }).addTo(mymap);
+            const id = Object.values(municipios).filter(municipio => {
+                return municipio.id_ibge === id_ibge;
+            })[0].id;
+            
+            const response = await fetch(`http://sistemas.tce.pi.gov.br/api/portaldacidadania/despesas/${id}/2020/porFuncao`);
+            
+            const despesas = await response.json();
+            
+            return `
+                <b>${despesas[0].funcao}</b>: R$ ${despesas[0].paga}<br/>
+                <b>${despesas[1].funcao}</b>: R$ ${despesas[1].paga}<br/>
+                <b>${despesas[2].funcao}</b>: R$ ${despesas[2].paga}<br/>
+                <b>${despesas[3].funcao}</b>: R$ ${despesas[3].paga}<br/>
+            `;
+        }
+
+        async function onEachFeature(feature, layer) {
+            const despesa = await getDespesaMunicipio(feature.properties.id);
+            layer.bindPopup(`<b>${feature.properties.name}</b>
+            <hr/>
+            ${despesa}
+            `);
+        }
+
+        L.geoJSON(fronteiras, {
+            onEachFeature: onEachFeature,
+        }).addTo(mymap);
+
+    };
+
+    getDespesas();
 
 
     // marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();

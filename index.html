@@ -28,6 +28,11 @@
             lo = -0.09;
         };
 
+        function formatMoney(params) {
+            return new Intl.NumberFormat('pt-BR').format(params);
+
+        }
+
         // async function getCidade() {
         //     const dados = await fetch('https://servicodados.ibge.gov.br/api/v1/localidades/microrregioes/22005/distritos');
         //     const dadosJson = await dados.json();
@@ -144,10 +149,10 @@
             const despesas = await response.json();
 
             return `
-                <b>${despesas[0].funcao}</b>: R$ ${despesas[0].paga}<br/>
-                <b>${despesas[1].funcao}</b>: R$ ${despesas[1].paga}<br/>
-                <b>${despesas[2].funcao}</b>: R$ ${despesas[2].paga}<br/>
-                <b>${despesas[3].funcao}</b>: R$ ${despesas[3].paga}<br/>
+                <b>${despesas[0].funcao}</b>: R$ ` + formatMoney(despesas[0].paga) + `<br/>
+                <b>${despesas[1].funcao}</b>: R$ ` + formatMoney(despesas[1].paga) + `<br/>
+                <b>${despesas[2].funcao}</b>: R$ ` + formatMoney(despesas[2].paga) + `<br/>
+                <b>${despesas[3].funcao}</b>: R$ ` + formatMoney(despesas[3].paga) + `<br/>
             `;
         }
 

@@ -76,12 +76,12 @@
         <div class="row">
             <div class="container-md">
                 <br />
-                <p>Esta página foi criada com o intuito de disponibilizar informações relevantes para a sociedade,
+                <p>Essa página foi criada com o intuito de disponibilizar informações relevantes para a sociedade,
                     sendo
                     de fácil compreensão e acesso para a sociedade interessada.</p>
             </div>
             <div class="row">
-                <h3>Alguns dos links de API utilizados:</h3>
+                <h3>Alguns dos links de API utilizadas:</h3>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">http://sistemas.tce.pi.gov.br/api/portaldacidadania/prefeituras</li>
                     <li class="list-group-item">http://sistemas.tce.pi.gov.br/api/portaldacidadania/despesas/</li>
@@ -96,11 +96,19 @@
                     <li class="list-group-item">carregar um modelo de mapa:
                         https://leafletjs.com/reference-1.7.1.html#map-option
                     </li>
-                    <li class="list-group-item">escolher região para ser carregada inicialmente;</li>
-                    <li class="list-group-item">marcar pontos ou delimitar regiões com coordenadas geográficas;</li>
+                    <li class="list-group-item">escolher região para ser carregada inicialmente e fixar essas
+                        coordenadas no código do mapa;</li>
+                    <li class="list-group-item">
+                        marcar pontos ou delimitar regiões com coordenadas geográficas utilizando uma linguagem de
+                        programção. Ex.: javascript;
+                    </li>
+                    <li class="list-group-item">
+                        pegar um Jsom() com as coordenadas das cidades que voçê quer exibir com as fronteiras
+                        demarcadas;
+                    </li>
                     <li class="list-group-item">criar funções com uma linguagem de programação para “pegar” as
                         informações das API’s;</li>
-                    <li class="list-group-item">carregar as informações das funções no mapa.</li>
+                    <li class="list-group-item">carregar as informações que voçê quer exibir das API's no mapa.</li>
                 </ul>
             </div>
         </div>
@@ -121,20 +129,20 @@
         zoomOffset: -1,
         accessToken: 'pk.eyJ1Ijoicm9tYXJpb3NvYXJlcyIsImEiOiJja2sydGMxYjIwZTNiMnBudW83MmpsZnp5In0.OgY6SxTiUBOLyJlisOB6Cw'
     }).addTo(mymap);
-    
+
 
     async function getDespesas() {
 
-        async function getDespesaMunicipio(id_ibge){
+        async function getDespesaMunicipio(id_ibge) {
 
             const id = Object.values(municipios).filter(municipio => {
                 return municipio.id_ibge === id_ibge;
             })[0].id;
-            
+
             const response = await fetch(`http://sistemas.tce.pi.gov.br/api/portaldacidadania/despesas/${id}/2020/porFuncao`);
-            
+
             const despesas = await response.json();
-            
+
             return `
                 <b>${despesas[0].funcao}</b>: R$ ${despesas[0].paga}<br/>
                 <b>${despesas[1].funcao}</b>: R$ ${despesas[1].paga}<br/>

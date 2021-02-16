@@ -22,7 +22,7 @@
     <script>
 
         async function cidade(id) {
-            const local = await fetch('http://llcb.opendatabr.org/api/' + id);
+            const local = await fetch('https://llcb.opendatabr.org/api/' + id);
             const localJson = await local.json();
             la = 51.505;
             lo = -0.09;
@@ -144,7 +144,7 @@
                 return municipio.id_ibge === id_ibge;
             })[0].id;
 
-            const response = await fetch(`http://sistemas.tce.pi.gov.br/api/portaldacidadania/despesas/${id}/2020/porFuncao`);
+            const response = await fetch(`https://sistemas.tce.pi.gov.br/api/portaldacidadania/despesas/${id}/2020/porFuncao`);
 
             const despesas = await response.json();
 
